@@ -20,15 +20,14 @@ function isAuthenticated (req, res, next) {
 	}
 }
 
-// because `isAuthenticated` sits just before our handler
-// the handler will only run if the user is authenticated
-router.get('/', isAuthenticated, function (req, res) {
+router.get('/', function (req, res) {
 	// only authenticated users get to witness the coolest
-	res.sendFile(__dirname + '/theCoolest.html');
+	if (req.user) res.sendFile(__dirname + '/theCoolest.html');
+	else res.send('i am (g)root');
 });
 
-// again, the handler below will only manage to execute
-// if the user is authenticated
+// because `isAuthenticated` sits just before our handler
+// the handler will only run if the user is authenticated
 router.get('/tweets/by/:handle', isAuthenticated, function (req, res, next) {
 	// using our user-specific twitter client
 	// get the tweets of the specified handle
@@ -37,14 +36,23 @@ router.get('/tweets/by/:handle', isAuthenticated, function (req, res, next) {
 	}, function (err, tweets) {
 		if (err) return next(err);
 		var leanTweets = tweets.map(function (tweet) {
-			// extract the relevant info
+			// extract relevant info
 			return {
+				name: tweet.user.name,
+				handle: tweet.user.screen_name,
 				text: tweet.text,
-
+				date: tweet.created_at,
+				imageUrl: tweet.user.profile_image_url
 			};
 		});
 		res.json(leanTweets);
 	});
+});
+
+router.get('/logout', function (req, res) {
+	// passport attaches this function to req for us
+	req.logout();
+	res.redirect('/');
 });
 
 // if the user requests a login through twitter
@@ -54,8 +62,8 @@ router.get('/auth/twitter', passport.authenticate('twitter'));
 // if twitter sends us an authenticated user
 // execute passport's twitter strategy
 // afterwards, redirect to root
-router.get('/auth/twitter/callback', passport.authenticate('twitter', function (req, res) {
+router.get('/auth/twitter/callback', passport.authenticate('twitter'), function (req, res) {
 	res.redirect('/');
-}));
+});
 
 module.exports = router;
