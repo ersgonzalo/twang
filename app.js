@@ -31,6 +31,7 @@ app.use(passport.session());
 
 // our custom routes---the behavior of our app
 app.use(require('./routes'));
+app.use(express.static(__dirname + '/public'));
 
 // if we made it this far, then there was nothing
 // that sent a response

@@ -22,8 +22,9 @@ function isAuthenticated (req, res, next) {
 
 router.get('/', function (req, res) {
 	// only authenticated users get to witness the coolest
-	if (req.user) res.sendFile(__dirname + '/theCoolest.html');
-	else res.send('i am (g)root');
+	if (req.user) res.sendFile(__dirname + '/index.html');
+	// else res.send('i am (g)root');
+	else res.sendFile(__dirname + '/login.html');
 });
 
 // because `isAuthenticated` sits just before our handler

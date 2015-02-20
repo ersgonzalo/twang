@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
+		 <script src="app.js"></script>
+		 <link rel="stylesheet" href="style.css">
+		<title>Something Twitter App</title>
+	</head>
+	<body ng-app="Twang">
+			<div ng-controller="Namer">
+				<span>Welcome {{name}}!</span>
+				<img src={{imgSrc}}/>
+			</div>
+			<hr>
+		<div ng-controller="TweetSearcher">
+		<form ng-submit="submitHandle(handle)">
+			<h3>Twitter Handle:</h3> 
+			<!-- {{handle}} -->
+			<input name="handle" type="text" ng-model="handle">
+			<button type="submit">Submit</button>
+		</form>
+			<ul><li ng-repeat="tweet in tweets">{{tweet.text}}</li></ul>
+			<p id="hello">This paragraph is pink! And pink and pink!</p>
+		</div>
+		<sun-glasses></sun-glasses>
+	</body>
+	<footer>Welcome to nightmare</footer>
+</html>
