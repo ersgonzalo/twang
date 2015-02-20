@@ -28,11 +28,12 @@ router.get('/', function (req, res) {
 
 // because `isAuthenticated` sits just before our handler
 // the handler will only run if the user is authenticated
-router.get('/tweets/by/:handle', isAuthenticated, function (req, res, next) {
+router.get('/tweets', isAuthenticated, function (req, res, next) {
+	var handle = req.query.handle;
 	// using our user-specific twitter client
-	// get the tweets of the specified handle
+	// get the tweets of the specified handle (should be placed in the query string)
 	req.user.client.get('statuses/user_timeline', {
-		screen_name: req.params.handle
+		screen_name: handle
 	}, function (err, tweets) {
 		if (err) return next(err);
 		var leanTweets = tweets.map(function (tweet) {
