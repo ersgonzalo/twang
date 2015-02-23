@@ -3,13 +3,14 @@
 	<head>
 		 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.13/angular.min.js"></script>
 		 <script src="app.js"></script>
+		 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 		 <link rel="stylesheet" href="style.css">
 		<title>Something Twitter App</title>
 	</head>
 	<body ng-app="Twang">
 			<div ng-controller="Namer">
 				<span>Welcome {{name}}!</span>
-				<img src={{imgSrc}}/>
+				<img ng-src={{imgSrc}}/>
 			</div>
 			<hr>
 		<div ng-controller="TweetSearcher">
@@ -19,7 +20,7 @@
 			<input name="handle" type="text" ng-model="handle">
 			<button type="submit">Submit</button>
 		</form>
-			<ul><li ng-repeat="tweet in tweets">{{tweet.text}}</li></ul>
+			<tweet-display one-tweet="test" ng-repeat="test in tweets"></tweet-display>
 			<p id="hello">This paragraph is pink! And pink and pink!</p>
 		</div>
 		<sun-glasses></sun-glasses>

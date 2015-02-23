@@ -44,7 +44,10 @@ app.factory('TweetFactory', function($http){
 app.directive('tweetDisplay', function(){
 	return{
 		restrict: 'E',
-		templateUrl: '/templates/tweets.html'
+		scope: {
+			oneTweet: '=' //camel casing also affects the scope
+		},
+		templateUrl: '/tweets.html'
 	}
 
 });
